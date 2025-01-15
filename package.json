@@ -7,10 +7,10 @@
   },
   "devDependencies": {},
   "scripts": {
+    "test": "jest",
     "start": "node server.js",
     "seed": "node db/seed.js",
-    "seed:test": "NODE_ENV=test node db/seed_test.js",
-    "test": "NODE_ENV=test jest --runInBand"
+    "seed:test": "node db/seed_test.js"
   },
   "keywords": [],
   "author": "",

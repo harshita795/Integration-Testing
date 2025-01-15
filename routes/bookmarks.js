@@ -6,10 +6,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const bookmarkData = await Bookmark.findAll();
-    res.status(200).json({
-      message: "Bookmarks fetched successfully",
-      Bookmarks: bookmarkData,
-    });
+    res.status(200).json(bookmarkData);
   } catch (error) {
     res.status(500).json({
       message: "Error in fetching bookmarks data",
@@ -20,8 +17,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { url, tile, description } = req.body;
-    const newBookmark = await Bookmark.create({ url, tile, description });
+    const { url, title, description } = req.body;
+    const newBookmark = await Bookmark.create({ url, title, description });
 
     res.status(201).json({
       message: "New Bookmark created successfully.",
@@ -43,7 +40,7 @@ router.patch("/:id", async (req, res) => {
     const updatedBookmark = await Bookmark.findOne({ where: { id } });
 
     if (!updatedBookmark) {
-      res.status(400).json({ message: "Bookmark not found." });
+      res.status(404).json({ message: "Bookmark not found." });
     }
 
     if (favorite !== undefined) updatedBookmark.favorite = favorite;
@@ -69,7 +66,7 @@ router.delete("/:id", async (req, res) => {
     const deletedBookmark = await Bookmark.destroy({ where: { id } });
 
     if (!deletedBookmark) {
-      res.status(400).json({ message: "Bookmark not found." });
+      res.status(404).json({ message: "Bookmark not found." });
     }
 
     res.status(200).json({
